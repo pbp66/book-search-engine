@@ -19,6 +19,7 @@ export default typeDefs = `
     }
 
     type Auth {
+        _id: ID!
         token: String!
         user: User
     }
@@ -39,7 +40,7 @@ export default typeDefs = `
     type Mutation {
         login(email: String!, password: String!): Auth
         addUser(username: String!, email: String!, password: String!): Auth
-        saveBook(input: SavedBookInput): User
+        saveBook(input: SavedBookInput!): User
         removeBook(bookId: String!): User
     }
 `;

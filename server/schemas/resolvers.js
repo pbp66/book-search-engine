@@ -3,12 +3,12 @@ const { signToken } = require("../utils/auth");
 
 export default resolvers = {
 	Query: {
-		me: async (parent, args, context) => {
+		me: async (parent, args, context, info) => {
 			return await User.findById(args._id);
 		},
 	},
 	Mutation: {
-		login: async (parents, args, context) => {
+		login: async (parents, args, context, info) => {
 			const user = await User.findOne({ email: args.email });
 
 			if (!user) {
@@ -26,8 +26,8 @@ export default resolvers = {
 			const token = signToken(user);
 			return res.json({ token, user });
 		},
-		addUser: async (parents, args, context) => {
-			const user = await User.create(args);
+		addUser: async (parents, args, context, info) => {
+			const user = await User.create(args); //username, email, password
 
 			if (!user) {
 				return res.status(400).json({ message: "Something is wrong!" });
@@ -35,7 +35,7 @@ export default resolvers = {
 			const token = signToken(user);
 			return res.json({ token, user });
 		},
-		saveBook: async (parents, { user, book, ...args }, context) => {
+		saveBook: async (parents, { user, book, ...args }, context, info) => {
 			try {
 				const updatedUser = await User.findOneAndUpdate(
 					{ _id: user._id },
@@ -48,7 +48,12 @@ export default resolvers = {
 				return res.status(400).json(err);
 			}
 		},
-		removeBook: async (parents, { user, bookId, ...args }, context) => {
+		removeBook: async (
+			parents,
+			{ user, bookId, ...args },
+			context,
+			info
+		) => {
 			const updatedUser = await User.findOneAndUpdate(
 				{ _id: user._id },
 				{ $pull: { savedBooks: { bookId: bookId } } },
