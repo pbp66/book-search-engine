@@ -3,6 +3,7 @@ export default typeDefs = `
         _id: ID!
         username: String!
         email: String!
+        password: String!
         bookCount: Int
         savedBooks: [Book]
 	}
@@ -27,8 +28,8 @@ export default typeDefs = `
         description: String!
         title: String!
         bookId: String!
-        image: String!
-        link: String!
+        image: String
+        link: String
     }
 
     type Query {
