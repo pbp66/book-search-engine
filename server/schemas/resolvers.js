@@ -1,5 +1,5 @@
 import { User } from "../models/index.js";
-const { signToken } = require("../utils/auth");
+import signToken from "../utils/auth";
 
 export default resolvers = {
 	Query: {
