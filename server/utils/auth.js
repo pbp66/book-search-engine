@@ -1,7 +1,9 @@
+import dotenv from "dotnev";
+dotenv.config();
 import jwt from "jsonwebtoken";
 
 // set token secret and expiration date
-const secret = "mysecretsshhhhh";
+const secret = process.env.SERVER_SECRET;
 const expiration = "2h";
 
 module.exports = {
