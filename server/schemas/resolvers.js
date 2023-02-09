@@ -58,7 +58,7 @@ const resolvers = {
 		},
 		saveBook: async (parents, { book }, context, info) => {
 			try {
-				const user = await User.find(
+				const user = await User.findOneAndUpdate(
 					{ _id: context._id },
 					{ $addToSet: { savedBooks: book } },
 					{ new: true, runValidators: true }
@@ -79,17 +79,25 @@ const resolvers = {
 			}
 		},
 		removeBook: async (parents, { bookId }, context, info) => {
-			const updatedUser = await User.findOneAndUpdate(
-				{ _id: user._id },
-				{ $pull: { savedBooks: { bookId: bookId } } },
-				{ new: true }
-			);
-			if (!updatedUser) {
-				return res
-					.status(404)
-					.json({ message: "Couldn't find user with this id!" });
+			try {
+				const user = await User.findOneAndUpdate(
+					{ _id: context._id },
+					{ $pull: { savedBooks: { bookId } } },
+					{ new: true, runValidators: true }
+				);
+				if (!user) {
+					throw new GraphQLError("User does not exist", {
+						extensions: {
+							code: "USER NOT FOUND",
+							http: { status: 401 },
+						},
+					});
+				}
+
+				return user;
+			} catch (err) {
+				console.error("Error removing book", err);
 			}
-			return res.json(updatedUser);
 		},
 	},
 };
