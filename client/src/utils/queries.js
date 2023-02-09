@@ -1,14 +1,24 @@
-export const ME = `
-    query ME($_id: ID!) {
-        me(_id: $_id) {
-            User {
-                _id: ID!
-                username: String!
-                email: String!
-                password: String!
-                bookCount: Int
-                savedBooks: [Book]
-            }
-        }
-    }
+import { gql } from "@apollo/client";
+
+export const ME = gql`
+	query ME($_id: ID!) {
+		me(_id: $_id) {
+			user {
+				_id
+				username
+				email
+				password
+				bookCount
+				savedBooks {
+					_id
+					bookId
+					authors
+					description
+					title
+					image
+					link
+				}
+			}
+		}
+	}
 `;

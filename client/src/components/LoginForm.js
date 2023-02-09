@@ -13,6 +13,7 @@ const LoginForm = () => {
 	const [validated] = useState(false);
 	const [showAlert, setShowAlert] = useState(false);
 
+	// eslint-disable-next-line
 	const [login, { loading, error }] = useMutation(LOGIN);
 
 	const handleInputChange = (event) => {
@@ -29,6 +30,8 @@ const LoginForm = () => {
 			event.preventDefault();
 			event.stopPropagation();
 		}
+
+		console.log(userFormData);
 
 		try {
 			const { data } = await login({

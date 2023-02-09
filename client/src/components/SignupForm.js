@@ -13,6 +13,7 @@ const SignupForm = () => {
 		password: "",
 	});
 
+	// eslint-disable-next-line
 	const [addUser, { loading, error }] = useMutation(ADD_USER);
 
 	// set state for form validation
@@ -40,7 +41,7 @@ const SignupForm = () => {
 				variables: {
 					username: userFormData.username,
 					email: userFormData.email,
-					password: userFormData.email,
+					password: userFormData.password,
 				},
 			});
 
