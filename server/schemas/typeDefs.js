@@ -1,4 +1,4 @@
-export default typeDefs = `
+const typeDefs = `
 	type User {
         _id: ID!
         username: String!
@@ -33,7 +33,7 @@ export default typeDefs = `
     }
 
     type Query {
-        me(): User
+        me(_id: ID!): User
     }
 
     type Mutation {
@@ -43,3 +43,5 @@ export default typeDefs = `
         removeBook(bookId: String!): User
     }
 `;
+
+export default typeDefs;

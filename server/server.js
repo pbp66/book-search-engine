@@ -25,16 +25,16 @@ app.get("/", (req, res) => {
 	res.sendFile(path.join(__dirname, "../client/build/index.html"));
 });
 
-const startApolloServer = async (typeDefs, resolvers) => {
-	await server.start();
-	app.use(
-		"/graphql",
-		expressMiddleware(server, {
-			context: authMiddleware, // Runs all graphql req's through authMiddleware
-		})
-	);
+const startApolloServer = () => {
+	db.once("open", async () => {
+		await server.start();
+		app.use(
+			"/graphql",
+			expressMiddleware(server, {
+				context: authMiddleware, // Runs all graphql req's through authMiddleware
+			})
+		);
 
-	db.once("open", () => {
 		app.listen(PORT, () => {
 			console.log(
 				`🌍 API server running Now Listening on http://localhost:${PORT}`
@@ -44,4 +44,4 @@ const startApolloServer = async (typeDefs, resolvers) => {
 	});
 };
 
-startApolloServer(typeDefs, resolvers);
+startApolloServer();

@@ -1,7 +1,7 @@
-import Schema from "mongoose";
+import mongoose from "mongoose";
 
 // This is a subdocument schema, it won't become its own model but we'll use it as the schema for the User's `savedBooks` array in User.js
-export default bookSchema = new Schema({
+const bookSchema = new mongoose.Schema({
 	authors: [
 		{
 			type: String,
@@ -27,3 +27,5 @@ export default bookSchema = new Schema({
 		required: true,
 	},
 });
+
+export default bookSchema;

@@ -1,8 +1,8 @@
 import { GraphQLError } from "graphql";
 import { User } from "../models/index.js";
-import signToken from "../utils/auth";
+import { signToken } from "../utils/auth";
 
-export default resolvers = {
+const resolvers = {
 	Query: {
 		me: async (parent, args, context, info) => {
 			return await User.findById(context._id); // user account passed by context via authMiddleware
@@ -94,3 +94,5 @@ export default resolvers = {
 		},
 	},
 };
+
+export default resolvers;
