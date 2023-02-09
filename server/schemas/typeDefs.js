@@ -19,7 +19,6 @@ export default typeDefs = `
     }
 
     type Auth {
-        _id: ID!
         token: String!
         user: User
     }
@@ -34,7 +33,7 @@ export default typeDefs = `
     }
 
     type Query {
-        me(_id: ID!): User
+        me(): User
     }
 
     type Mutation {

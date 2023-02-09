@@ -1,30 +1,46 @@
+import { GraphQLError } from "graphql";
 import { User } from "../models/index.js";
 import signToken from "../utils/auth";
 
 export default resolvers = {
 	Query: {
-		me: async (parent, { user, ...args }, context, info) => {
-			return await User.findById(user._id);
+		me: async (parent, args, context, info) => {
+			return await User.findById(context._id); // user account passed by context via authMiddleware
 		},
 	},
 	Mutation: {
-		login: async (parents, args, context, info) => {
-			const user = await User.findOne({ email: args.email });
+		login: async (
+			parents,
+			{ username, email, password, ...args },
+			context,
+			info
+		) => {
+			const user = await User.findOne({ email: email });
 
 			if (!user) {
-				return res
-					.status(400)
-					.json({ message: "Can't find this user" });
+				throw new GraphQLError("User is not authenticated", {
+					extensions: {
+						code: "UNAUTHENTICATED",
+						http: { status: 401 },
+					},
+				});
 			}
 
-			const correctPw = await user.isCorrectPassword(args.password);
+			const correctPasswordBoolean = await user.isCorrectPassword(
+				password
+			);
 
-			if (!correctPw) {
-				return res.status(400).json({ message: "Wrong password!" });
+			if (!correctPasswordBoolean) {
+				throw new GraphQLError("Wrong Password", {
+					extensions: {
+						code: "INCORRECT PASSWORD",
+						http: { status: 401 },
+					},
+				});
 			}
 
 			const token = signToken(user);
-			return res.json({ token, user });
+			return { token, user };
 		},
 		addUser: async (parents, args, context, info) => {
 			const user = await User.create(args); //username, email, password
