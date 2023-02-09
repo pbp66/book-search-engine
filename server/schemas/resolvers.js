@@ -5,16 +5,11 @@ import { signToken } from "../utils/auth";
 const resolvers = {
 	Query: {
 		me: async (parent, args, context, info) => {
-			return await User.findById(context._id); // user account passed by context via authMiddleware
+			return await User.findById(args._id);
 		},
 	},
 	Mutation: {
-		login: async (
-			parents,
-			{ username, email, password, ...args },
-			context,
-			info
-		) => {
+		login: async (parents, { email, password }, context, info) => {
 			const user = await User.findOne({ email });
 
 			if (!user) {
@@ -44,7 +39,7 @@ const resolvers = {
 		},
 		addUser: async (
 			parents,
-			{ username, email, password, ...args },
+			{ username, email, password },
 			context,
 			info
 		) => {
@@ -61,25 +56,29 @@ const resolvers = {
 			const token = signToken(user);
 			return { token, user };
 		},
-		saveBook: async (parents, { user, book, ...args }, context, info) => {
+		saveBook: async (parents, { book }, context, info) => {
 			try {
-				const updatedUser = await User.findOneAndUpdate(
-					{ _id: user._id },
+				const user = await User.find(
+					{ _id: context._id },
 					{ $addToSet: { savedBooks: book } },
 					{ new: true, runValidators: true }
 				);
-				return res.json(updatedUser);
+
+				if (!user) {
+					throw new GraphQLError("User does not exist", {
+						extensions: {
+							code: "USER NOT FOUND",
+							http: { status: 401 },
+						},
+					});
+				}
+
+				return user;
 			} catch (err) {
-				console.log(err);
-				return res.status(400).json(err);
+				console.error("Error saving book", err);
 			}
 		},
-		removeBook: async (
-			parents,
-			{ user, bookId, ...args },
-			context,
-			info
-		) => {
+		removeBook: async (parents, { bookId }, context, info) => {
 			const updatedUser = await User.findOneAndUpdate(
 				{ _id: user._id },
 				{ $pull: { savedBooks: { bookId: bookId } } },
