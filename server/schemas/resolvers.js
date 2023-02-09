@@ -15,7 +15,7 @@ export default resolvers = {
 			context,
 			info
 		) => {
-			const user = await User.findOne({ email: email });
+			const user = await User.findOne({ email });
 
 			if (!user) {
 				throw new GraphQLError("User is not authenticated", {
@@ -42,14 +42,24 @@ export default resolvers = {
 			const token = signToken(user);
 			return { token, user };
 		},
-		addUser: async (parents, args, context, info) => {
-			const user = await User.create(args); //username, email, password
+		addUser: async (
+			parents,
+			{ username, email, password, ...args },
+			context,
+			info
+		) => {
+			const user = await User.create({ username, email, password });
 
 			if (!user) {
-				return res.status(400).json({ message: "Something is wrong!" });
+				throw new GraphQLError("User was not created", {
+					extensions: {
+						code: "BAD USER DATA",
+						http: { status: 401 },
+					},
+				});
 			}
 			const token = signToken(user);
-			return res.json({ token, user });
+			return { token, user };
 		},
 		saveBook: async (parents, { user, book, ...args }, context, info) => {
 			try {

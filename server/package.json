@@ -5,8 +5,8 @@
 	"main": "server.js",
 	"type": "module",
 	"scripts": {
-		"start": "node server.js",
-		"seed": "node seeds/seed.js",
+		"start": "node --experimental-modules --es-module-specifier-resolution=node server.js",
+		"seed": "node --experimental-modules --es-module-specifier-resolution=node seeds/seed.js",
 		"watch": "npx nodemon server.js"
 	},
 	"keywords": [],
