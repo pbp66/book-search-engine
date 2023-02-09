@@ -23,5 +23,10 @@
 	},
 	"devDependencies": {
 		"nodemon": "^2.0.3"
+	},
+	"nodemonConfig": {
+		"execMap": {
+			"js": "node --experimental-modules --es-module-specifier-resolution=node"
+		}
 	}
 }
