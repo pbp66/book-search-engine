@@ -3,8 +3,8 @@ import signToken from "../utils/auth";
 
 export default resolvers = {
 	Query: {
-		me: async (parent, args, context, info) => {
-			return await User.findById(args._id);
+		me: async (parent, { user, ...args }, context, info) => {
+			return await User.findById(user._id);
 		},
 	},
 	Mutation: {

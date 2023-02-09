@@ -4,6 +4,7 @@ import { ApolloServer } from "@apollo/server";
 import { expressMiddleware } from "@apollo/server/express4";
 import db from "./config/connection";
 import { typeDefs, resolvers } from "./schemas";
+import { authMiddleware } from "./utils/auth";
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -26,7 +27,12 @@ app.get("/", (req, res) => {
 
 const startApolloServer = async (typeDefs, resolvers) => {
 	await server.start();
-	app.use("/graphql", expressMiddleware(server));
+	app.use(
+		"/graphql",
+		expressMiddleware(server, {
+			context: authMiddleware, // Runs all graphql req's through authMiddleware
+		})
+	);
 
 	db.once("open", () => {
 		app.listen(PORT, () => {
