@@ -5,7 +5,7 @@ import { signToken } from "../utils/auth";
 const resolvers = {
 	Query: {
 		me: async (parent, args, context, info) => {
-			return await User.findById(args._id);
+			return await User.findById(context._id);
 		},
 	},
 	Mutation: {
