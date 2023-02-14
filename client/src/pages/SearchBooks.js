@@ -8,9 +8,9 @@ import {
 	Card,
 	CardColumns,
 } from "react-bootstrap";
-
+import { useMutation } from "@apollo/client";
 import Auth from "../utils/auth";
-import { saveBook, searchGoogleBooks } from "../utils/API";
+import { searchGoogleBooks } from "../utils/API";
 import { saveBookIds, getSavedBookIds } from "../utils/localStorage";
 import { SAVE_BOOK } from "../utils/mutations";
 
@@ -23,6 +23,7 @@ const SearchBooks = () => {
 	// create state to hold saved bookId values
 	const [savedBookIds, setSavedBookIds] = useState(getSavedBookIds());
 
+	// eslint-disable-next-line no-unused-vars
 	const [saveBook, { loading, error }] = useMutation(SAVE_BOOK);
 
 	// set up useEffect hook to save `savedBookIds` list to localStorage on component unmount
@@ -55,6 +56,7 @@ const SearchBooks = () => {
 				title: book.volumeInfo.title,
 				description: book.volumeInfo.description,
 				image: book.volumeInfo.imageLinks?.thumbnail || "",
+				link: book.selfLink,
 			}));
 
 			setSearchedBooks(bookData);
@@ -77,8 +79,9 @@ const SearchBooks = () => {
 		}
 
 		try {
+			console.log(bookToSave);
 			const response = await saveBook({
-				variables: { input: searchedBooks },
+				variables: { book: bookToSave },
 			});
 
 			if (!response.ok) {
