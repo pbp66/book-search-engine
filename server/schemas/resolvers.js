@@ -5,8 +5,10 @@ import { signToken } from "../utils/auth";
 const resolvers = {
 	Query: {
 		me: async (parent, args, context, info) => {
-			console.log("Query Me", context);
-			return await User.findById(context.user._id);
+			if (context.user) {
+				return User.findById(context.user._id);
+			}
+			throw new GraphQLError("You need to be logged in!");
 		},
 	},
 	Mutation: {
