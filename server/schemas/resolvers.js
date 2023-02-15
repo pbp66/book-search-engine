@@ -6,7 +6,7 @@ const resolvers = {
 	Query: {
 		me: async (parent, args, context, info) => {
 			if (context.user) {
-				return User.findById(context.user._id);
+				return await User.findById(context.user._id);
 			}
 			throw new GraphQLError("User is not authenticated", {
 				extensions: {
