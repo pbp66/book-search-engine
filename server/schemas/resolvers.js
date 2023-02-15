@@ -101,7 +101,7 @@ const resolvers = {
 						},
 					});
 				}
-
+				console.log(user);
 				return user;
 			} catch (err) {
 				console.error("Error removing book", err);
