@@ -5,7 +5,15 @@ import { signToken } from "../utils/auth";
 const resolvers = {
 	Query: {
 		me: async (parent, args, context, info) => {
-			return await User.findById(args._id);
+			if (context.user) {
+				return await User.findById(context.user._id);
+			}
+			throw new GraphQLError("User is not authenticated", {
+				extensions: {
+					code: "UNAUTHENTICATED",
+					http: { status: 401 },
+				},
+			});
 		},
 	},
 	Mutation: {
@@ -59,7 +67,7 @@ const resolvers = {
 		saveBook: async (parents, { book }, context, info) => {
 			try {
 				const user = await User.findOneAndUpdate(
-					{ _id: context._id },
+					{ _id: context.user._id },
 					{ $addToSet: { savedBooks: book } },
 					{ new: true, runValidators: true }
 				);
@@ -81,7 +89,7 @@ const resolvers = {
 		removeBook: async (parents, { bookId }, context, info) => {
 			try {
 				const user = await User.findOneAndUpdate(
-					{ _id: context._id },
+					{ _id: context.user._id },
 					{ $pull: { savedBooks: { bookId } } },
 					{ new: true, runValidators: true }
 				);
@@ -93,7 +101,7 @@ const resolvers = {
 						},
 					});
 				}
-
+				console.log(user);
 				return user;
 			} catch (err) {
 				console.error("Error removing book", err);
