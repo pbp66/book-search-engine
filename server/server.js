@@ -1,4 +1,3 @@
-import path from "path";
 import express from "express";
 import { ApolloServer } from "@apollo/server";
 import { expressMiddleware } from "@apollo/server/express4";
@@ -17,12 +16,18 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // if we're in production, serve client/build as static assets
+// To use with ES6, changed path.join to using URL objects:
+// https://stackoverflow.com/questions/46745014/alternative-for-dirname-in-node-js-when-using-es6-modules
 if (process.env.NODE_ENV === "production") {
-	app.use(express.static(path.resolve("./", "../client/build")));
+	app.use(
+		express.static(new URL("../client.build", import.meta.url).pathname)
+	);
 }
 
 app.get("/", (req, res) => {
-	res.sendFile(path.resolve("./", "../client/build/index.html"));
+	res.sendFile(
+		new URL("../client/build/index.html", import.meta.url).pathname
+	);
 });
 
 const startApolloServer = () => {
