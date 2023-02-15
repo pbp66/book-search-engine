@@ -15,7 +15,6 @@ export function signToken({ username, email, _id }) {
 export function authMiddleware({ req, res }) {
 	// allows token to be sent via body, query, or header
 	let token = req.body.token || req.query.token || req.headers.authorization;
-
 	// ["Bearer", "<tokenvalue>"]
 	if (req.headers.authorization) {
 		token = token.split(" ").pop().trim();

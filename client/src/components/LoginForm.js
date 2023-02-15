@@ -31,8 +31,6 @@ const LoginForm = () => {
 			event.stopPropagation();
 		}
 
-		console.log(userFormData);
-
 		try {
 			const { data } = await login({
 				variables: {

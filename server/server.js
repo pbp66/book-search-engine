@@ -37,11 +37,9 @@ const startApolloServer = () => {
 
 		app.listen(PORT, () => {
 			console.log(
-				`🌍 API server running Now Listening on https://localhost:${PORT}`
+				`🌍 API server running Now Listening on http://localhost:${PORT}`
 			);
-			console.log(
-				`Use GraphQL at https://localhost:${PORT}${"/graphql"}`
-			);
+			console.log(`Use GraphQL at http://localhost:${PORT}${"/graphql"}`);
 		});
 	});
 };
