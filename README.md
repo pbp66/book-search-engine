@@ -64,7 +64,32 @@ No need to install this application. Click this link to visit the application: [
 
 ## Usage
 
-TODO
+Visiting the site will display this search page:
+![search-for-books-launch-page](./assets/readme/launch-page.png)
+
+If you use the search term programming, the following results are most likely to appear:
+![Searching-programming](./assets/readme/search-for-programming.png)
+
+Since we aren't logged in, we can only view the books, not save them. Clicking the login/signup loads a modal on the screen prompting to login or signup.
+![Login-Modal](./assets/readme/login-modal.png)
+
+The sign-up modal is mostly the same with the added addition of a username field.
+![Signup-Modal](./assets/readme/signup-modal.png)
+
+When searching while logged in, a button now appears allowing you to save a book.
+![Searching-Programming](./assets/readme/search-for-programming-logged-in.png)
+![Save-Book-Button](./assets/readme/saved-book.png)
+
+Clicking on saved books will load the Saved Books Page and display all of the books you've saved.
+![Saved-Books-Page](./assets/readme/saved-books-page.png)
+
+Additionally, the option to delete a saved book is also present if you no longer want to save a book.
+![Delete-Book-Button](./assets/readme/delete-book-button.png)
+
+Clicking on the delete book button will remove the book from your saved books list.
+![Saved-Books-Page](./assets/readme/after-deleting-book.png)
+
+Clicking logout in the header will log you out of the site.
 
 ## License
 
