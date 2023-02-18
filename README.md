@@ -60,12 +60,11 @@ THEN I am logged out of the site and presented with a menu with the options Sear
 
 ## Installation
 
-TODO
+No need to install this application. Click this link to visit the application: [Deployed App!](https://calm-reef-49139.herokuapp.com/)
 
 ## Usage
 
 TODO
-[Deployed App!](https://calm-reef-49139.herokuapp.com/)
 
 ## License
 
