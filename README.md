@@ -1,8 +1,8 @@
-# Book-search-engine
+# Book-Search-Engine
 
 ## Description
 
-TODO
+This simple fullstack application uses the MERN stack to save books using google's book API [`https://www.googleapis.com/books/v1/volumes?q=<search terms>`](https://developers.google.com/books/docs/v1/using). Rather than use traditional routes and controllers, [apollo client/server](https://www.apollographql.com/) and [graphQL](https://graphql.org/) are used to pair the [react](https://reactjs.org/[) front-end with [MongoDB](https://www.mongodb.com/).
 
 User Story:
 
@@ -48,7 +48,7 @@ THEN I am logged out of the site and presented with a menu with the options Sear
 
 ## Table of Contents
 
-- [Book-search-engine](#book-search-engine)
+- [Book-Search-Engine](#book-search-engine)
   - [Description](#description)
   - [Table of Contents](#table-of-contents)
   - [Installation](#installation)
