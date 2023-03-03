@@ -19,6 +19,7 @@ app.use(express.json());
 // To use with ES6, changed path.join to using URL objects:
 // https://stackoverflow.com/questions/46745014/alternative-for-dirname-in-node-js-when-using-es6-modules
 if (process.env.NODE_ENV === "production") {
+	// Previous code when not using cyclic.sh
 	// app.use(
 	// 	express.static(new URL("../client/build", import.meta.url).pathname)
 	// );
